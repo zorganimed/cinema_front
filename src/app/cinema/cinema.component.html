@@ -1,1 +1,23 @@
-<p>cinema works!</p>
+<div>
+  <div class="row">
+    <div class="col-md-4">
+      <ul *ngIf="villes">
+        <li *ngFor="let v of villes._embedded.villes" class="list-group-item" (click)="onGetCinemas(v)">
+          {{v.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">Liste des Cinémas</div>
+        <div class="panel-body">
+          <ul *ngIf="cinemas" class="nav nav-pills">
+            <li *ngFor="let c of cinemas._embedded.cinemas">
+              <a>{{c.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
