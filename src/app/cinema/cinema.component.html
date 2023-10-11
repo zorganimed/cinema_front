@@ -1,21 +1,46 @@
 <div>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <ul *ngIf="villes">
-        <li *ngFor="let v of villes._embedded.villes" class="list-group-item" (click)="onGetCinemas(v)">
+        <li [ngClass]="v == currentVille ? 'active':''" *ngFor="let v of villes._embedded.villes" class="list-group-item clickable" (click)="onGetCinemas(v)">
           {{v.name}}
         </li>
       </ul>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
       <div class="panel panel-default">
         <div class="panel-heading">Liste des Cinémas</div>
         <div class="panel-body">
           <ul *ngIf="cinemas" class="nav nav-pills">
-            <li *ngFor="let c of cinemas._embedded.cinemas">
-              <a>{{c.name}}</a>
+            <li *ngFor="let c of cinemas._embedded.cinemas" class="clickable">
+              <a (click)="onGetSalles(c)">{{c.name}}</a>
             </li>
           </ul>
+          <div class="row" *ngIf="salles">
+            <div *ngFor="let s of salles._embedded.salles">
+              <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">{{s.nom}}</div>
+                <div class="panel-body" *ngIf="s.projections">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <img width="200" height="200" src="{{cinemaService.host+'/imageFilm/'+s.projections._embedded.projections[0].film.id}}"/>
+                    </div>
+                    <div class="col-md-7">
+                      <ul class="list-group">
+                        <li class="list-group-item">Séances:</li>
+                        <li (click)="onGetPlaces(p)" *ngFor="let p of s.projections._embedded.projections" class="list-group-item">
+                          {{p.seance.heureDebut}} => Prix : {{p.prix|number:'0.00'}} TND
+                        </li>
+                      </ul>
+                    </div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
